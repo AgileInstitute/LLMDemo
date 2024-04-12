@@ -2,19 +2,11 @@
 require 'sublayer'
 require './RspecSourceCodeGenerator'
 
-generator = RspecSourceCodeGenerator.new(unit_tests:"# RSpec tests for Santa class
-RSpec.describe Santa do
-  subject(:santa) { described_class.new }
+specsFile = File.open("./spec/specs.rb")
+theTests = specsFile.read
+specsFile.close
 
-  describe '#move_floors' do
-    context 'when the directions are (())' do
-      it 'ends on floor 0' do
-        santa.move_floors('(())')
-        expect(santa.current_floor).to eq(0)
-      end
-    end
-end")
+generator = RspecSourceCodeGenerator.new(unit_tests:theTests)
 
-puts generator.generate
-
-
+solution = generator.generate
+File.write("./lib/solution.rb", solution)
