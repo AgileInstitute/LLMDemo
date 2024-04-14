@@ -2,7 +2,7 @@
 require 'sublayer'
 require './RspecSourceCodeGenerator'
 
-specsFile = File.open("./spec/specs.rb")
+specsFile = File.open("./spec/box_spec.rb")
 theTests = specsFile.read
 specsFile.close
 

@@ -4,7 +4,7 @@ class Box
   end
 
   def add(item)
-    @items.push(item)
+    @items << item
   end
 
   def remove(item)
@@ -13,6 +13,10 @@ class Box
 
   def has(item)
     @items.include?(item)
+  end
+
+  def colors(item_type)
+    @items.select { |item| item.split.last == item_type }.map { |item| item.split.first }.uniq
   end
 
   def number_of_items
