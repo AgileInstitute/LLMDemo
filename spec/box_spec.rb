@@ -8,7 +8,12 @@ RSpec.describe "box" do
       @box.add("red pen")
     end
 
-    it "knows that the colors parameter is a type of object" do
+    it "tells us all of the colors of a given object in the box" do
+      @box.add("blue hat")
+      expect(@box.colors("hat")).to eq ["blue"]
+    end
+
+    it "tells us all of the colors of a specified object in the box when there are other types of objects that should be ignored" do
       @box.add("blue pencil")
       expect(@box.colors("pen")).to eq ["red"]
     end
