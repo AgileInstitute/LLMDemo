@@ -1,7 +1,7 @@
 # Implementation to satisfy the given RSpec tests
-require 'set'
+require 'myset'
 
-class Set
+class MySet
   # Overriding the initializer to make sure it doesn't conflict
   # with the default Set class of Ruby
   def initialize(items = [])
