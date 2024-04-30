@@ -6,6 +6,11 @@ describe "myset" do
     @myset = MySet.new(array_of_elements)
   end
 
+  it "knows it is empty" do
+    @myset = MySet.new([])
+    expect(@myset.isEmpty).to be true
+  end
+
   it "knows that it's NOT empty" do
     expect(@myset.isEmpty).to be false
   end
