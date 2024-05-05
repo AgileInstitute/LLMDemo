@@ -3,22 +3,25 @@ class MySet
     @elements = elements.uniq
   end
 
-  def has(element)
-    @elements.include?(element)
+  def intersect_with(other)
+    common_elements = @elements.select { |element| other.has(element) }
+    MySet.new(common_elements)
+  end
+
+  def union(other)
+    combined_elements = @elements + other.to_a
+    MySet.new(combined_elements)
   end
 
   def isEmpty
     @elements.empty?
   end
 
-  def union(other_set)
-    united_elements = @elements + other_set.to_a
-    MySet.new(united_elements)
+  def has(element)
+    @elements.include?(element)
   end
 
   def to_a
     @elements
   end
 end
-
-# Assuming the 'myset' library file is named myset.rb

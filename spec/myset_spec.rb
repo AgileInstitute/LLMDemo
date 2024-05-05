@@ -9,7 +9,16 @@ describe "myset" do
     @set_xyz = MySet.new(["x", "y", "z"])
   end
 
-  it "can build a union from two other sets" do
+  it "can build an intersection from itself and another set" do
+      intersection = @set_axb.intersect_with(@set_xyz)
+      expect(intersection.has("x")).to be true
+      expect(intersection.has("a")).to be false
+      expect(intersection.has("b")).to be false
+      expect(intersection.has("y")).to be false
+      expect(intersection.has("z")).to be false
+  end
+
+  it "can build a union from itself and another set" do
       union = @set_axb.union(@set_xyz)
       expect(union.has("a")).to be true
       expect(union.has("b")).to be true
