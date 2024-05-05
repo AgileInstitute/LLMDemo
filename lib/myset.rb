@@ -12,22 +12,16 @@ class MySet
   end
 
   def intersect_with(other_set)
-    intersection_elements = @elements & other_set.elements
+    intersection_elements = @elements & other_set.instance_variable_get(:@elements)
     MySet.new(intersection_elements)
   end
 
   def union(other_set)
-    union_elements = @elements | other_set.elements
+    union_elements = @elements | other_set.instance_variable_get(:@elements)
     MySet.new(union_elements)
   end
 
   def is_superset_of(other_set)
-    (other_set.elements - @elements).empty?
-  end
-
-  protected
-
-  def elements
-    @elements
+    (other_set.instance_variable_get(:@elements) - @elements).empty?
   end
 end

@@ -2,7 +2,7 @@
 require 'sublayer'
 require './RspecSourceCodeGenerator'
 
-File.rename("./lib/myset.rb", "./lib/PREVIOUS_myset.rb")
+FileUtils.cp("./lib/myset.rb", "./lib/PREVIOUS_myset.rb")
 
 specsFile = File.open("./spec/myset_spec.rb")
 theTests = specsFile.read
