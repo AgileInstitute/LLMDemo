@@ -1,6 +1,6 @@
 require 'myset'
 
-describe "myset" do
+describe "myset WITHOUT using existing Ruby Set features" do
     describe "basics" do
         before(:each) do
           array_of_elements = ["red pen"]
