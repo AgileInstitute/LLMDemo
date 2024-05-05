@@ -1,16 +1,6 @@
 class MySet
-  def initialize(elements = [])
+  def initialize(elements)
     @elements = elements.uniq
-  end
-
-  def intersect_with(other)
-    common_elements = @elements.select { |element| other.has(element) }
-    MySet.new(common_elements)
-  end
-
-  def union(other)
-    combined_elements = @elements + other.to_a
-    MySet.new(combined_elements)
   end
 
   def isEmpty
@@ -21,7 +11,23 @@ class MySet
     @elements.include?(element)
   end
 
-  def to_a
+  def intersect_with(other_set)
+    intersection_elements = @elements & other_set.elements
+    MySet.new(intersection_elements)
+  end
+
+  def union(other_set)
+    union_elements = @elements | other_set.elements
+    MySet.new(union_elements)
+  end
+
+  def is_superset_of(other_set)
+    (other_set.elements - @elements).empty?
+  end
+
+  protected
+
+  def elements
     @elements
   end
 end

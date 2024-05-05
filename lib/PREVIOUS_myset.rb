@@ -1,24 +1,29 @@
+require 'set'
+
 class MySet
-  def initialize(elements = [])
-    @elements = elements.uniq
+  def initialize(elements)
+    @set = Set.new(elements)
   end
 
-  def has(element)
-    @elements.include?(element)
+  def is_superset_of(other_set)
+    @set.superset?(other_set.instance_variable_get(:@set))
   end
 
-  def isEmpty
-    @elements.empty?
+  def intersect_with(other_set)
+    intersection = @set & other_set.instance_variable_get(:@set)
+    MySet.new(intersection.to_a)
   end
 
   def union(other_set)
-    united_elements = @elements + other_set.to_a
-    MySet.new(united_elements)
+    unionized = @set | other_set.instance_variable_get(:@set)
+    MySet.new(unionized.to_a)
   end
 
-  def to_a
-    @elements
+  def isEmpty
+    @set.empty?
+  end
+
+  def has(element)
+    @set.include?(element)
   end
 end
-
-# Assuming the 'myset' library file is named myset.rb
