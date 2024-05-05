@@ -59,5 +59,9 @@ describe "myset" do
         it "knows when it is a superset of another set" do
             expect(@bigger_set.is_superset_of(@smaller_set)).to be true
         end
+
+        it "knows when it is a subset of another set" do
+            expect(@smaller_set.is_subset_of(@bigger_set)).to be true
+        end
     end
 end
