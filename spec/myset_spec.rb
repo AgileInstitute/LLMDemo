@@ -56,6 +56,11 @@ describe "myset WITHOUT using existing Ruby Set features" do
             @smaller_set = MySet.new(["c", "d", "e"])
         end
 
+        it "knows when it is NOT a superset of another set" do
+            unique_set = MySet.new(["x", "k", "c", "d"])
+            expect(@bigger_set.is_superset_of(unique_set)).to be false
+        end
+
         it "knows when it is a superset of another set" do
             expect(@bigger_set.is_superset_of(@smaller_set)).to be true
         end
