@@ -1,37 +1,38 @@
 class MySet
   def initialize(elements)
+    raise 'nil is not allowed as an element' if elements.include?(nil)
     @elements = elements.uniq
   end
 
-  # Checks if the set is empty
   def isEmpty
     @elements.empty?
   end
 
-  # Checks for element presence
   def has(element)
     @elements.include?(element)
   end
 
-  # Returns a new MySet with elements common to both sets
-  def intersect_with(other)
-    intersection = @elements & other.instance_variable_get(:@elements)
-    MySet.new(intersection)
+  def intersect_with(other_set)
+    intersection_elements = @elements & other_set.elements
+    MySet.new(intersection_elements)
   end
 
-  # Returns a new MySet with all elements from both sets, excluding duplicates
-  def union(other)
-    union = @elements | other.instance_variable_get(:@elements)
-    MySet.new(union)
+  def union(other_set)
+    union_elements = @elements | other_set.elements
+    MySet.new(union_elements)
   end
 
-  # Checks if the set is a superset
-  def is_superset_of(other)
-    (@elements & other.instance_variable_get(:@elements)).sort == other.instance_variable_get(:@elements).sort
+  def is_superset_of(other_set)
+    (other_set.elements - @elements).empty?
   end
 
-  # Checks if the set is a subset
-  def is_subset_of(other)
-    (other.instance_variable_get(:@elements) & @elements).sort == @elements.sort
+  def is_subset_of(other_set)
+    (@elements - other_set.elements).empty?
+  end
+
+  protected
+
+  def elements
+    @elements
   end
 end

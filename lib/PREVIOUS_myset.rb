@@ -1,8 +1,7 @@
-require 'set'
-
 class MySet
-  def initialize(elements = [])
-    @elements = Set.new(elements)
+  def initialize(elements)
+    raise 'Nil element detected' if elements.any?(&:nil?)
+    @elements = elements.uniq
   end
 
   def isEmpty
@@ -14,26 +13,20 @@ class MySet
   end
 
   def intersect_with(other_set)
-    intersection = @elements & other_set.elements
-    MySet.new(intersection.to_a)
+    common_elements = @elements & other_set.instance_variable_get(:@elements)
+    MySet.new(common_elements)
   end
 
   def union(other_set)
-    union = @elements | other_set.elements
-    MySet.new(union.to_a)
+    combined_elements = @elements | other_set.instance_variable_get(:@elements)
+    MySet.new(combined_elements)
   end
 
   def is_superset_of(other_set)
-    @elements.superset?(other_set.elements)
+    (other_set.instance_variable_get(:@elements) - @elements).empty?
   end
 
   def is_subset_of(other_set)
-    @elements.subset?(other_set.elements)
-  end
-
-  protected
-
-  def elements
-    @elements
+    (@elements - other_set.instance_variable_get(:@elements)).empty?
   end
 end

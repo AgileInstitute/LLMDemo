@@ -25,6 +25,12 @@ describe "myset WITHOUT using existing Ruby Set features" do
         end
     end
 
+    describe "initialization errors" do
+        it "will not accept nil as an element" do
+            expect{ MySet.new(["a", nil, "b"]) }.to raise_error("nil is not allowed as an element")
+        end
+    end
+
     describe "unions and intersections" do
         before(:each) do
           @set_axb = MySet.new(["a", "x", "b"])
