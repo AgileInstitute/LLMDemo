@@ -13,21 +13,26 @@ describe "myset WITHOUT using existing Ruby Set features" do
         end
 
         it "knows that it's NOT empty" do
-          expect(@myset.isEmpty).to be false
+          expect(@myset.isEmpty)
+              .to be false
         end
 
         it "knows what it has" do
-          expect(@myset.has("red pen")).to be true
+          expect(@myset.has("red pen"))
+              .to be true
         end
 
         it "knows what it doesn't have" do
-          expect(@myset.has("purple smartphone")).to be false
+          expect(@myset.has("purple smartphone"))
+              .to be false
         end
     end
 
     describe "initialization errors" do
         it "will not accept nil as an element" do
-            expect{ MySet.new(["a", nil, "b"]) }.to raise_error("nil is not allowed as an element")
+            expect{
+                MySet.new(["a", nil, "b"])
+            }.to raise_error("nil is not allowed as an element")
         end
     end
 
@@ -64,19 +69,23 @@ describe "myset WITHOUT using existing Ruby Set features" do
         end
 
         it "knows when it is NOT a subset of a larger set" do
-            expect(@unique_set.is_subset_of(@bigger_set)).to be false
+            expect(@unique_set.is_subset_of(@bigger_set))
+                .to be false
         end
 
         it "knows when it is NOT a superset of a smaller set" do
-            expect(@bigger_set.is_superset_of(@unique_set)).to be false
+            expect(@bigger_set.is_superset_of(@unique_set))
+                .to be false
         end
 
         it "knows when it is a superset of another set" do
-            expect(@bigger_set.is_superset_of(@smaller_set)).to be true
+            expect(@bigger_set.is_superset_of(@smaller_set))
+                .to be true
         end
 
         it "knows when it is a subset of another set" do
-            expect(@smaller_set.is_subset_of(@bigger_set)).to be true
+            expect(@smaller_set.is_subset_of(@bigger_set))
+                .to be true
         end
     end
 end
