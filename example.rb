@@ -1,6 +1,6 @@
 
 require 'sublayer'
-require './RspecSourceCodeGenerator'
+require './rspec_source_code_generator'
 
 FileUtils.cp("./lib/myset.rb", "./lib/PREVIOUS_myset.rb")
 
