@@ -13,9 +13,9 @@ class RspecSourceCodeGenerator < Sublayer::Generators::Base
 
   def prompt
     <<-PROMPT
-        You are an expert programmer.
+        You are an expert object-oriented programmer.
 
-        You are tasked with generating source code based on the following RSpec unit tests: #{@unit_tests}
+        You are tasked with generating source code based on the following unit tests: #{@unit_tests}
 
         The goal is to ensure the generated source code passes these tests.
 
