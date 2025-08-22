@@ -8,7 +8,7 @@ describe 'nostalgic trek' do
       @shield = Shield.new
     end
 
-    it 'cannot receive more than max' do
+    it 'cannot receive more than max" do
       @shield.receive(6000)
       expect(@shield.energy_level).to be 10_000
     end
