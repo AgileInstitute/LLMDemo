@@ -1,12 +1,15 @@
 class Shield
+  MAX_ENERGY_LEVEL = 10000
+  INITIAL_ENERGY_LEVEL = 5000
+
   def initialize
-    @energy_level = 5000
+    @energy_level = INITIAL_ENERGY_LEVEL
     @is_up = false
   end
 
-  def receive(amount)
-    temp_energy = @energy_level + amount
-    @energy_level = [temp_energy, 10000].min
+  def receive(energy)
+    new_energy_level = @energy_level + energy
+    @energy_level = [new_energy_level, MAX_ENERGY_LEVEL].min
   end
 
   def energy_level

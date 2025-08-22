@@ -1,24 +1,25 @@
 class Shield
-  attr_reader :energy_level
-
   MAX_ENERGY = 10000
   INITIAL_ENERGY = 5000
 
   def initialize
-    @energy_level = INITIAL_ENERGY + 1
-    @raised = false
+    @energy_level = INITIAL_ENERGY
+    @up = false
   end
 
-  def receive(energy)
-    potential_energy = @energy_level + energy
-    @energy_level = potential_energy < MAX_ENERGY ? MAX_ENERGY : potential_energy
+  def receive(amount)
+    @energy_level = [@energy_level + amount, MAX_ENERGY].min
+  end
+
+  def energy_level
+    @energy_level
   end
 
   def raise
-    @raised = true
+    @up = true
   end
 
   def up?
-    @raised
+    @up
   end
 end
