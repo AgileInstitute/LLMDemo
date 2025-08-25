@@ -20,6 +20,3 @@ class Ship
     @id = id
   end
 end
-
-# Note: The commented positions (0,10), (10,9), and (9,-1) in the tests suggest
-# that the board dimensions are from 0 to 9 inclusive, any position outside of this raises an error.
