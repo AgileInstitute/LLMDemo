@@ -13,6 +13,11 @@ describe 'when placing ships on boards' do
       .to raise_error('Invalid board position!')
   end
 
+  it 'will not place a ship if another one is already there' do
+    @board.place(@ship, 0, 0)
+    expect { @board.place(Ship.new(1), 0, 0) }.to raise_error('There is already something there!')
+  end
+
   it 'will place a ship where asked' do
     @board.place(@ship, 0, 0)
     expect(@board.whats_at(0, 0)).to eq(@ship)
