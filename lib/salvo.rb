@@ -5,6 +5,7 @@ class Board
 
   def place(ship, x, y)
     raise 'Invalid board position!' if x < 0 || y < 0 || x >= 10 || y >= 10
+    raise 'There is already something there!' if @grid[x][y]
 
     @grid[x][y] = ship
   end
