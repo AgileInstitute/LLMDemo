@@ -4,24 +4,41 @@ class Board
   end
 
   def place(ship, row, column, orientation = 'horizontal')
-    raise 'Invalid orientation!' unless ['horizontal', 'vertical'].include?(orientation)
-    raise 'Invalid board position!' if row < 0 || column < 0 || row >= 10 || column >= 10
+    validate_orientation(orientation)
+    validate_position(row, column)
+    validate_ship_fits_on_board(ship, row, column, orientation)
+    check_for_collisions(ship, row, column, orientation)
+    check_for_adjacent_ships(ship, row, column, orientation)
+    place_ship_on_board(ship, row, column, orientation)
+  end
 
-    # Check if ship fits on board
+  private
+
+  def validate_orientation(orientation)
+    raise 'Invalid orientation!' unless ['horizontal', 'vertical'].include?(orientation)
+  end
+
+  def validate_position(row, column)
+    raise 'Invalid board position!' if row < 0 || column < 0 || row >= 10 || column >= 10
+  end
+
+  def validate_ship_fits_on_board(ship, row, column, orientation)
     if orientation == 'horizontal'
       raise 'Ship extends beyond board!' if column + ship.length > 10
     else # vertical
       raise 'Ship extends beyond board!' if row + ship.length > 10
     end
+  end
 
-    # Check for collisions
+  def check_for_collisions(ship, row, column, orientation)
     ship.length.times do |i|
       check_row = orientation == 'vertical' ? row + i : row
       check_column = orientation == 'horizontal' ? column + i : column
       raise 'There is already something there!' if @grid[check_row][check_column]
     end
+  end
 
-    # Check for adjacent ships
+  def check_for_adjacent_ships(ship, row, column, orientation)
     ship.length.times do |i|
       check_row = orientation == 'vertical' ? row + i : row
       check_column = orientation == 'horizontal' ? column + i : column
@@ -44,8 +61,9 @@ class Board
         end
       end
     end
+  end
 
-    # Place the ship
+  def place_ship_on_board(ship, row, column, orientation)
     ship.length.times do |i|
       place_row = orientation == 'vertical' ? row + i : row
       place_column = orientation == 'horizontal' ? column + i : column
