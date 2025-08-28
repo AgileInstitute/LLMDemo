@@ -9,8 +9,8 @@ describe 'when placing ships on boards' do
     @long_ship = Ship.new(3)
   end
 
-  def expect_invalid_position(row, column, orientation = 'horizontal')
-    expect { @board.place(@ship, row, column, orientation) }
+  def expect_invalid_position(row, column)
+    expect { @board.place(@ship, row, column, 'horizontal') }
       .to raise_error('Invalid board position!')
   end
 
@@ -29,18 +29,8 @@ describe 'when placing ships on boards' do
     expect { @board.place(Ship.new(1), 0, 2) }.to raise_error('There is already something there!')
   end
 
-  it 'will place a ship where asked horizontally by default' do
-    @board.place(@ship, 0, 0)
-    expect(@board.whats_at(0, 0)).to eq(@ship)
-  end
-
-  it 'will place a ship where asked with explicit horizontal orientation' do
+  it 'will place a tiny ship where asked with redundant orientation' do
     @board.place(@ship, 0, 0, 'horizontal')
-    expect(@board.whats_at(0, 0)).to eq(@ship)
-  end
-
-  it 'will place a ship where asked with vertical orientation' do
-    @board.place(@ship, 0, 0, 'vertical')
     expect(@board.whats_at(0, 0)).to eq(@ship)
   end
 
@@ -86,7 +76,7 @@ describe 'when placing ships on boards' do
       .to raise_error('Ship extends beyond board!')
   end
 
-  it 'will NOT place a ship with invalid orientation' do
+  it 'will NOT place a ship diagonally' do
     expect { @board.place(@ship, 0, 0, 'diagonal') }
       .to raise_error('Invalid orientation!')
   end
