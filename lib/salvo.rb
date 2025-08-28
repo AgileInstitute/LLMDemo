@@ -5,11 +5,14 @@ class Board
 
   def place(ship, row, column, orientation = 'horizontal')
     validate_orientation(orientation)
-    validate_position(row, column)
     validate_ship_fits_on_board(ship, row, column, orientation)
     check_for_collisions(ship, row, column, orientation)
     check_for_adjacent_ships(ship, row, column, orientation)
     place_ship_on_board(ship, row, column, orientation)
+  end
+
+  def whats_at(row, column)
+    @grid[row][column]
   end
 
   private
@@ -18,15 +21,12 @@ class Board
     raise 'Invalid orientation!' unless ['horizontal', 'vertical'].include?(orientation)
   end
 
-  def validate_position(row, column)
-    raise 'Invalid board position!' if row < 0 || column < 0 || row >= 10 || column >= 10
-  end
-
   def validate_ship_fits_on_board(ship, row, column, orientation)
+    raise 'Ship begins beyond board!' if row < 0 || column < 0 || row > 9 || column > 9
     if orientation == 'horizontal'
-      raise 'Ship extends beyond board!' if column + ship.length > 10
+      raise 'Ship extends beyond board!' if column + (ship.length - 1) > 9
     else # vertical
-      raise 'Ship extends beyond board!' if row + ship.length > 10
+      raise 'Ship extends beyond board!' if row + (ship.length - 1) > 9
     end
   end
 
@@ -71,9 +71,6 @@ class Board
     end
   end
 
-  def whats_at(row, column)
-    @grid[row][column]
-  end
 end
 
 class Ship
