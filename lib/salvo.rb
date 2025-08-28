@@ -3,20 +3,65 @@ class Board
     @grid = Array.new(10) { Array.new(10) }
   end
 
-  def place(ship, x, y)
-    raise 'Invalid board position!' if x < 0 || y < 0 || x >= 10 || y >= 10
-    raise 'There is already something there!' if @grid[x][y]
+  def place(ship, row, column, orientation = 'horizontal')
+    raise 'Invalid orientation!' unless ['horizontal', 'vertical'].include?(orientation)
+    raise 'Invalid board position!' if row < 0 || column < 0 || row >= 10 || column >= 10
 
-    @grid[x][y] = ship
+    # Check if ship fits on board
+    if orientation == 'horizontal'
+      raise 'Ship extends beyond board!' if column + ship.length > 10
+    else # vertical
+      raise 'Ship extends beyond board!' if row + ship.length > 10
+    end
+
+    # Check for collisions
+    ship.length.times do |i|
+      check_row = orientation == 'vertical' ? row + i : row
+      check_column = orientation == 'horizontal' ? column + i : column
+      raise 'There is already something there!' if @grid[check_row][check_column]
+    end
+
+    # Check for adjacent ships
+    ship.length.times do |i|
+      check_row = orientation == 'vertical' ? row + i : row
+      check_column = orientation == 'horizontal' ? column + i : column
+
+      # Check all 8 adjacent positions around this cell
+      (-1..1).each do |row_offset|
+        (-1..1).each do |column_offset|
+          next if row_offset == 0 && column_offset == 0 # Skip the cell itself
+
+          adjacent_row = check_row + row_offset
+          adjacent_column = check_column + column_offset
+
+          # Skip if adjacent position is outside board bounds
+          next if adjacent_row < 0 || adjacent_row >= 10 || adjacent_column < 0 || adjacent_column >= 10
+
+          # Check if there's a ship in the adjacent position
+          if @grid[adjacent_row][adjacent_column]
+            raise 'Ships should not be adjacent!'
+          end
+        end
+      end
+    end
+
+    # Place the ship
+    ship.length.times do |i|
+      place_row = orientation == 'vertical' ? row + i : row
+      place_column = orientation == 'horizontal' ? column + i : column
+      @grid[place_row][place_column] = ship
+    end
   end
 
-  def whats_at(x, y)
-    @grid[x][y]
+  def whats_at(row, column)
+    @grid[row][column]
   end
 end
 
 class Ship
-  def initialize(id)
-    @id = id
+  attr_reader :length
+
+  def initialize(length)
+    @length = length
   end
 end
