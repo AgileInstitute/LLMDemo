@@ -1,4 +1,7 @@
 class Board
+  HORIZONTAL = 'horizontal'
+  VERTICAL = 'vertical'
+
   def initialize
     @grid = Array.new(10) { Array.new(10) }
   end
@@ -18,12 +21,12 @@ class Board
   private
 
   def validate_orientation(orientation)
-    raise 'Invalid orientation!' unless ['horizontal', 'vertical'].include?(orientation)
+    raise 'Invalid orientation!' unless [HORIZONTAL, VERTICAL].include?(orientation)
   end
 
   def validate_ship_fits_on_board(ship, row, column, orientation)
     raise 'Ship begins beyond board!' if row < 0 || column < 0 || row > 9 || column > 9
-    if orientation == 'horizontal'
+    if orientation == HORIZONTAL
       raise 'Ship extends beyond board!' if column + (ship.length - 1) > 9
     else # vertical
       raise 'Ship extends beyond board!' if row + (ship.length - 1) > 9
@@ -32,16 +35,16 @@ class Board
 
   def check_for_collisions(ship, row, column, orientation)
     ship.length.times do |i|
-      check_row = orientation == 'vertical' ? row + i : row
-      check_column = orientation == 'horizontal' ? column + i : column
+      check_row = orientation == VERTICAL ? row + i : row
+      check_column = orientation == HORIZONTAL ? column + i : column
       raise 'There is already something there!' if @grid[check_row][check_column]
     end
   end
 
   def check_for_adjacent_ships(ship, row, column, orientation)
     ship.length.times do |i|
-      check_row = orientation == 'vertical' ? row + i : row
-      check_column = orientation == 'horizontal' ? column + i : column
+      check_row = orientation == VERTICAL ? row + i : row
+      check_column = orientation == HORIZONTAL ? column + i : column
 
       # Check all 8 adjacent positions around this cell
       (-1..1).each do |row_offset|
@@ -65,8 +68,8 @@ class Board
 
   def place_ship_on_board(ship, row, column, orientation)
     ship.length.times do |zero_based_counter|
-      cell_row = orientation == 'vertical' ? row + zero_based_counter : row
-      cell_column = orientation == 'horizontal' ? column + zero_based_counter : column
+      cell_row = orientation == VERTICAL ? row + zero_based_counter : row
+      cell_column = orientation == HORIZONTAL ? column + zero_based_counter : column
       @grid[cell_row][cell_column] = ship
     end
   end
