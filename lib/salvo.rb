@@ -64,10 +64,10 @@ class Board
   end
 
   def place_ship_on_board(ship, row, column, orientation)
-    ship.length.times do |i|
-      place_row = orientation == 'vertical' ? row + i : row
-      place_column = orientation == 'horizontal' ? column + i : column
-      @grid[place_row][place_column] = ship
+    ship.length.times do |zero_based_counter|
+      cell_row = orientation == 'vertical' ? row + zero_based_counter : row
+      cell_column = orientation == 'horizontal' ? column + zero_based_counter : column
+      @grid[cell_row][cell_column] = ship
     end
   end
 
