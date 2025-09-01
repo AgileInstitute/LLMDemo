@@ -32,7 +32,6 @@ describe 'when placing ships on boards' do
     end
   end
 
-
   it 'will not place a ship adjacent to another one' do
     @board.place(@tiny_ship, 0, 0, 'horizontal')
     expect { @board.place(Ship.new(1), 0, 1, 'horizontal') }.to raise_error('Ships should not be adjacent!')
@@ -73,6 +72,13 @@ describe 'when placing ships on boards' do
     expect(@board.whats_at(2, 0)).to eq(@long_ship)
     expect(@board.whats_at(3, 0)).to be_nil
   end
+
+  it 'will place a long ship against the edge of the board' do
+    @board.place(@long_ship, 0, 7, 'horizontal')
+    expect(@board.whats_at(0, 7)).to eq(@long_ship)
+    expect(@board.whats_at(0, 8)).to eq(@long_ship)
+    expect(@board.whats_at(0, 9)).to eq(@long_ship)
+   end
 
 
   it 'will NOT place a long ship horizontally if it extends beyond board' do
