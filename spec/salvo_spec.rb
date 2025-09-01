@@ -34,17 +34,17 @@ describe 'when placing ships on boards' do
 
 
   it 'will not place a ship adjacent to another one' do
-    @board.place(@tiny_ship, 0, 0)
+    @board.place(@tiny_ship, 0, 0, 'horizontal')
     expect { @board.place(Ship.new(1), 0, 1, 'horizontal') }.to raise_error('Ships should not be adjacent!')
   end
 
   it 'will not place a ship if another one shares a starting position' do
-    @board.place(@tiny_ship, 0, 0)
+    @board.place(@tiny_ship, 0, 0, 'horizontal')
     expect { @board.place(Ship.new(1), 0, 0, 'horizontal') }.to raise_error('There is already something there!')
   end
 
   it 'will not place a ship if another one is already there' do
-    @board.place(@long_ship, 0, 0)
+    @board.place(@long_ship, 0, 0, 'horizontal')
     expect { @board.place(Ship.new(1), 0, 2, 'horizontal') }.to raise_error('There is already something there!')
   end
 
@@ -91,13 +91,13 @@ describe 'when placing ships on boards' do
   end
 
   it 'will NOT place a horizontal ship if it collides with existing ship' do
-    @board.place(@tiny_ship, 0, 1)
+    @board.place(@tiny_ship, 0, 1, 'horizontal')
     expect { @board.place(@long_ship, 0, 0, 'horizontal') }
       .to raise_error('There is already something there!')
   end
 
   it 'will NOT place a vertical ship if it collides with existing ship' do
-    @board.place(@tiny_ship, 1, 0)
+    @board.place(@tiny_ship, 1, 0, 'horizontal')
     expect { @board.place(@long_ship, 0, 0, 'vertical') }
       .to raise_error('There is already something there!')
   end

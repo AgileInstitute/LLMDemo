@@ -3,7 +3,7 @@ class Board
     @grid = Array.new(10) { Array.new(10) }
   end
 
-  def place(ship, row, column, orientation = 'horizontal')
+  def place(ship, row, column, orientation)
     validate_orientation(orientation)
     validate_ship_fits_on_board(ship, row, column, orientation)
     check_for_collisions(ship, row, column, orientation)
