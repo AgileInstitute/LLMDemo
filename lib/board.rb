@@ -16,7 +16,7 @@ class Board
     error_check_ship_starting_position(ship, row, column)
     error_check_ship_extent(ship, row, column, orientation)
     error_check_for_overlapping_ships(ship, row, column, orientation)
-    CheckShipsAdjacent.check(@grid, ship, row, column, orientation)
+    CheckShipsAdjacent.error_check(@grid, ship, row, column, orientation)
     place_ship_on_board(ship, row, column, orientation)
   end
 

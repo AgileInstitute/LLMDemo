@@ -4,13 +4,11 @@ end
 class CheckShipsAdjacent
   MESSAGE = 'Ships should not be adjacent!'
 
-  def self.check(grid, ship, row, column, orientation)
-    raise MESSAGE unless no_adjacent_ships?(grid, ship, row, column, orientation)
+  def self.error_check(grid, ship, row, column, orientation)
+    raise MESSAGE unless okay?(grid, ship, row, column, orientation)
   end
 
-  private
-
-  def self.no_adjacent_ships?(grid, ship, row, column, orientation)
+  def self.okay?(grid, ship, row, column, orientation)
     ship.length.times do |i|
       check_row = orientation == 'vertical' ? row + i : row
       check_column = orientation == 'horizontal' ? column + i : column
