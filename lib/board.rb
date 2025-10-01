@@ -2,7 +2,6 @@ class Board
   HORIZONTAL = 'horizontal'
   VERTICAL = 'vertical'
 
-  ERROR_INVALID_ORIENTATION = 'Invalid orientation!'
   ERROR_SHIP_BEGINS_BEYOND_BOARD = 'Ship begins beyond board!'
   ERROR_SHIP_EXTENDS_BEYOND_BOARD = 'Ship extends beyond board!'
   ERROR_ALREADY_SOMETHING_THERE = 'There is already something there!'
@@ -13,7 +12,6 @@ class Board
   end
 
   def place(ship, row, column, orientation)
-    error_check_ship_orientation(orientation)
     error_check_ship_starting_position(ship, row, column)
     error_check_ship_extent(ship, row, column, orientation)
     error_check_for_overlapping_ships(ship, row, column, orientation)
@@ -26,10 +24,6 @@ class Board
   end
 
   private
-
-  def error_check_ship_orientation(orientation)
-    raise ERROR_INVALID_ORIENTATION unless ship_orientation_okay?(orientation)
-  end
 
   def ship_orientation_okay?(orientation)
     [HORIZONTAL, VERTICAL].include?(orientation)

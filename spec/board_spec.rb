@@ -119,9 +119,4 @@ describe 'when placing ships on boards' do
       .to raise_error(Board::ERROR_SHIP_EXTENDS_BEYOND_BOARD)
   end
 
-  it 'will NOT place a ship diagonally' do
-    expect { @board.place(@tiny_ship, 0, 0, 'diagonal') }
-      .to raise_error(Board::ERROR_INVALID_ORIENTATION)
-  end
-
 end
