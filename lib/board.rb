@@ -6,7 +6,6 @@ class Board
 
   ERROR_SHIP_BEGINS_BEYOND_BOARD = 'Ship begins beyond board!'
   ERROR_SHIP_EXTENDS_BEYOND_BOARD = 'Ship extends beyond board!'
-  ERROR_ALREADY_SOMETHING_THERE = 'There is already something there!'
 
   def initialize
     @grid = Array.new(10) { Array.new(10) }
@@ -15,7 +14,7 @@ class Board
   def place(ship, row, column, orientation)
     error_check_ship_starting_position(ship, row, column)
     error_check_ship_extent(ship, row, column, orientation)
-    error_check_for_overlapping_ships(ship, row, column, orientation)
+    CheckOverlapping.error_check(@grid, ship, row, column, orientation)
     CheckShipsAdjacent.error_check(@grid, ship, row, column, orientation)
     place_ship_on_board(ship, row, column, orientation)
   end
@@ -50,18 +49,7 @@ class Board
     end
   end
 
-  def error_check_for_overlapping_ships(ship, row, column, orientation)
-    raise ERROR_ALREADY_SOMETHING_THERE unless no_overlapping_ships?(ship, row, column, orientation)
-  end
 
-  def no_overlapping_ships?(ship, row, column, orientation)
-    ship.length.times do |i|
-      check_row = orientation == VERTICAL ? row + i : row
-      check_column = orientation == HORIZONTAL ? column + i : column
-      return false if @grid[check_row][check_column]
-    end
-    true
-  end
 
   def place_ship_on_board(ship, row, column, orientation)
     ship.length.times do |zero_based_counter|

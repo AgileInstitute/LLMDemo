@@ -55,24 +55,24 @@ describe 'when placing ships on boards' do
   describe 'overlapping ships raise an error' do
     it 'will not place a ship if another one is already there' do
       @board.place(@long_ship, 0, 0, Board::HORIZONTAL)
-      expect { @board.place(Ship.new(1), 0, 2, Board::HORIZONTAL) }.to raise_error(Board::ERROR_ALREADY_SOMETHING_THERE)
+      expect { @board.place(Ship.new(1), 0, 2, Board::HORIZONTAL) }.to raise_error(CheckOverlapping.message)
     end
 
     it 'will NOT place a horizontal ship if it overlaps existing ship' do
       @board.place(@tiny_ship, 0, 1, Board::HORIZONTAL)
       expect { @board.place(@long_ship, 0, 0, Board::HORIZONTAL) }
-        .to raise_error(Board::ERROR_ALREADY_SOMETHING_THERE)
+        .to raise_error(CheckOverlapping.message)
     end
 
     it 'will NOT place a vertical ship if it overlaps existing ship' do
       @board.place(@tiny_ship, 1, 0, Board::HORIZONTAL)
       expect { @board.place(@long_ship, 0, 0, Board::VERTICAL) }
-        .to raise_error(Board::ERROR_ALREADY_SOMETHING_THERE)
+        .to raise_error(CheckOverlapping.message)
     end
 
     it 'will not place a ship if another one shares a starting position' do
       @board.place(@tiny_ship, 0, 0, Board::HORIZONTAL)
-      expect { @board.place(Ship.new(1), 0, 0, Board::HORIZONTAL) }.to raise_error(Board::ERROR_ALREADY_SOMETHING_THERE)
+      expect { @board.place(Ship.new(1), 0, 0, Board::HORIZONTAL) }.to raise_error(CheckOverlapping.message)
     end
   end
 

@@ -36,3 +36,21 @@ class CheckShipsAdjacent
     true
   end
 end
+
+class CheckOverlapping
+  include Check
+  extend Check
+
+  def self.message
+    'There is already something there!'
+  end
+
+  def self.okay?(grid, ship, row, column, orientation)
+    ship.length.times do |i|
+      check_row = orientation == 'vertical' ? row + i : row
+      check_column = orientation == 'horizontal' ? column + i : column
+      return false if grid[check_row][check_column]
+    end
+    true
+  end
+end
