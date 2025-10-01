@@ -6,13 +6,12 @@ end
 
 class CheckShipsAdjacent
   include Check
-  extend Check
 
-  def self.message
+  def message
     'Ships should not be adjacent!'
   end
 
-  def self.okay?(grid, ship, row, column, orientation)
+  def okay?(grid, ship, row, column, orientation)
     ship.length.times do |i|
       check_row = orientation == 'vertical' ? row + i : row
       check_column = orientation == 'horizontal' ? column + i : column
@@ -39,13 +38,12 @@ end
 
 class CheckOverlapping
   include Check
-  extend Check
 
-  def self.message
+  def message
     'There is already something there!'
   end
 
-  def self.okay?(grid, ship, row, column, orientation)
+  def okay?(grid, ship, row, column, orientation)
     ship.length.times do |i|
       check_row = orientation == 'vertical' ? row + i : row
       check_column = orientation == 'horizontal' ? column + i : column

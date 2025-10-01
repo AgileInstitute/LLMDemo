@@ -39,40 +39,40 @@ describe 'when placing ships on boards' do
       @board.place(@tiny_ship, 5, 5, Board::HORIZONTAL)
     end
     it 'will not place a ship to the right' do
-      expect { @board.place(Ship.new(1), 5, 6, Board::HORIZONTAL) }.to raise_error(CheckShipsAdjacent.message)
+      expect { @board.place(Ship.new(1), 5, 6, Board::HORIZONTAL) }.to raise_error(CheckShipsAdjacent.new.message)
     end
     it 'will not place a ship to the left' do
-      expect { @board.place(Ship.new(1), 5, 4, Board::HORIZONTAL) }.to raise_error(CheckShipsAdjacent.message)
+      expect { @board.place(Ship.new(1), 5, 4, Board::HORIZONTAL) }.to raise_error(CheckShipsAdjacent.new.message)
     end
     it 'will not place a ship above' do
-      expect { @board.place(Ship.new(1), 4, 5, Board::HORIZONTAL) }.to raise_error(CheckShipsAdjacent.message)
+      expect { @board.place(Ship.new(1), 4, 5, Board::HORIZONTAL) }.to raise_error(CheckShipsAdjacent.new.message)
     end
     it 'will not place a ship below' do
-      expect { @board.place(Ship.new(1), 6, 5, Board::HORIZONTAL) }.to raise_error(CheckShipsAdjacent.message)
+      expect { @board.place(Ship.new(1), 6, 5, Board::HORIZONTAL) }.to raise_error(CheckShipsAdjacent.new.message)
     end
   end
 
   describe 'overlapping ships raise an error' do
     it 'will not place a ship if another one is already there' do
       @board.place(@long_ship, 0, 0, Board::HORIZONTAL)
-      expect { @board.place(Ship.new(1), 0, 2, Board::HORIZONTAL) }.to raise_error(CheckOverlapping.message)
+      expect { @board.place(Ship.new(1), 0, 2, Board::HORIZONTAL) }.to raise_error(CheckOverlapping.new.message)
     end
 
     it 'will NOT place a horizontal ship if it overlaps existing ship' do
       @board.place(@tiny_ship, 0, 1, Board::HORIZONTAL)
       expect { @board.place(@long_ship, 0, 0, Board::HORIZONTAL) }
-        .to raise_error(CheckOverlapping.message)
+        .to raise_error(CheckOverlapping.new.message)
     end
 
     it 'will NOT place a vertical ship if it overlaps existing ship' do
       @board.place(@tiny_ship, 1, 0, Board::HORIZONTAL)
       expect { @board.place(@long_ship, 0, 0, Board::VERTICAL) }
-        .to raise_error(CheckOverlapping.message)
+        .to raise_error(CheckOverlapping.new.message)
     end
 
     it 'will not place a ship if another one shares a starting position' do
       @board.place(@tiny_ship, 0, 0, Board::HORIZONTAL)
-      expect { @board.place(Ship.new(1), 0, 0, Board::HORIZONTAL) }.to raise_error(CheckOverlapping.message)
+      expect { @board.place(Ship.new(1), 0, 0, Board::HORIZONTAL) }.to raise_error(CheckOverlapping.new.message)
     end
   end
 

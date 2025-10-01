@@ -14,8 +14,8 @@ class Board
   def place(ship, row, column, orientation)
     error_check_ship_starting_position(ship, row, column)
     error_check_ship_extent(ship, row, column, orientation)
-    CheckOverlapping.error_check(@grid, ship, row, column, orientation)
-    CheckShipsAdjacent.error_check(@grid, ship, row, column, orientation)
+    CheckOverlapping.new.error_check(@grid, ship, row, column, orientation)
+    CheckShipsAdjacent.new.error_check(@grid, ship, row, column, orientation)
     place_ship_on_board(ship, row, column, orientation)
   end
 
