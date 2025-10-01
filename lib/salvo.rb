@@ -7,9 +7,9 @@ class Board
   end
 
   def place(ship, row, column, orientation)
-    validate_orientation(orientation)
-    validate_ship_starting_position(ship, row, column)
-    validate_ship_extent(ship, row, column, orientation)
+    check_orientation(orientation)
+    check_ship_starting_position(ship, row, column)
+    check_ship_extent(ship, row, column, orientation)
     check_for_collisions(ship, row, column, orientation)
     check_for_adjacent_ships(ship, row, column, orientation)
     place_ship_on_board(ship, row, column, orientation)
@@ -21,15 +21,15 @@ class Board
 
   private
 
-  def validate_orientation(orientation)
+  def check_orientation(orientation)
     raise 'Invalid orientation!' unless [HORIZONTAL, VERTICAL].include?(orientation)
   end
 
-  def validate_ship_starting_position(ship, row, column)
+  def check_ship_starting_position(ship, row, column)
     raise 'Ship begins beyond board!' if row < 0 || column < 0 || row > 9 || column > 9
   end
 
-  def validate_ship_extent(ship, row, column, orientation)
+  def check_ship_extent(ship, row, column, orientation)
     if orientation == HORIZONTAL
       raise 'Ship extends beyond board!' if column + (ship.length - 1) > 9
     else # vertical
