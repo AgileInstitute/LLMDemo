@@ -7,10 +7,10 @@ class Board
   end
 
   def place(ship, row, column, orientation)
-    error_check_orientation(orientation)
+    error_check_ship_orientation(orientation)
     error_check_ship_starting_position(ship, row, column)
     error_check_ship_extent(ship, row, column, orientation)
-    error_check_for_collisions(ship, row, column, orientation)
+    error_check_for_overlapping_ships(ship, row, column, orientation)
     error_check_for_adjacent_ships(ship, row, column, orientation)
     place_ship_on_board(ship, row, column, orientation)
   end
@@ -21,11 +21,11 @@ class Board
 
   private
 
-  def error_check_orientation(orientation)
-    raise 'Invalid orientation!' unless orientation_okay?(orientation)
+  def error_check_ship_orientation(orientation)
+    raise 'Invalid orientation!' unless ship_orientation_okay?(orientation)
   end
 
-  def orientation_okay?(orientation)
+  def ship_orientation_okay?(orientation)
     [HORIZONTAL, VERTICAL].include?(orientation)
   end
 
@@ -49,11 +49,11 @@ class Board
     end
   end
 
-  def error_check_for_collisions(ship, row, column, orientation)
-    raise 'There is already something there!' unless no_collisions?(ship, row, column, orientation)
+  def error_check_for_overlapping_ships(ship, row, column, orientation)
+    raise 'There is already something there!' unless no_overlapping_ships?(ship, row, column, orientation)
   end
 
-  def no_collisions?(ship, row, column, orientation)
+  def no_overlapping_ships?(ship, row, column, orientation)
     ship.length.times do |i|
       check_row = orientation == VERTICAL ? row + i : row
       check_column = orientation == HORIZONTAL ? column + i : column
