@@ -8,7 +8,7 @@ class Board
 
   def place(ship, row, column, orientation)
     error_check_orientation(orientation)
-    check_ship_starting_position(ship, row, column)
+    error_check_ship_starting_position(ship, row, column)
     check_ship_extent(ship, row, column, orientation)
     check_for_collisions(ship, row, column, orientation)
     check_for_adjacent_ships(ship, row, column, orientation)
@@ -29,8 +29,12 @@ class Board
     [HORIZONTAL, VERTICAL].include?(orientation)
   end
 
-  def check_ship_starting_position(ship, row, column)
-    raise 'Ship begins beyond board!' if row < 0 || column < 0 || row > 9 || column > 9
+  def error_check_ship_starting_position(ship, row, column)
+    raise 'Ship begins beyond board!' unless ship_starting_position_okay?(ship, row, column)
+  end
+
+  def ship_starting_position_okay?(ship, row, column)
+    row >= 0 && column >= 0 && row <= 9 && column <= 9
   end
 
   def check_ship_extent(ship, row, column, orientation)
