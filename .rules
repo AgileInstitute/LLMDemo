@@ -19,6 +19,7 @@
 - YOU write the tests
 - I write the code to make the new test pass without breaking any other tests
 - I will NOT write tests but will suggest test cases in English when YOU ask for them
+- I will run tests using: `bundle exec rspec`
 
 ## Code Implementation
 - I will write implementation code to pass the latest failing test
@@ -32,6 +33,7 @@
 
 ## Refactoring Guidelines
 - I will perform refactorings when you request them
+- I will *not* provide a summary of the refactoring process
 - When refactoring implementation code:
   - I will NOT modify existing tests
   - I will only change the implementation while maintaining test compatibility
