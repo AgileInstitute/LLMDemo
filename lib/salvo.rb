@@ -7,7 +7,7 @@ class Board
   end
 
   def place(ship, row, column, orientation)
-    check_orientation(orientation)
+    error_check_orientation(orientation)
     check_ship_starting_position(ship, row, column)
     check_ship_extent(ship, row, column, orientation)
     check_for_collisions(ship, row, column, orientation)
@@ -21,8 +21,12 @@ class Board
 
   private
 
-  def check_orientation(orientation)
-    raise 'Invalid orientation!' unless [HORIZONTAL, VERTICAL].include?(orientation)
+  def error_check_orientation(orientation)
+    raise 'Invalid orientation!' unless orientation_okay?(orientation)
+  end
+
+  def orientation_okay?(orientation)
+    [HORIZONTAL, VERTICAL].include?(orientation)
   end
 
   def check_ship_starting_position(ship, row, column)
