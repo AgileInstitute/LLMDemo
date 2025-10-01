@@ -9,9 +9,9 @@ class Board
   def place(ship, row, column, orientation)
     error_check_orientation(orientation)
     error_check_ship_starting_position(ship, row, column)
-    check_ship_extent(ship, row, column, orientation)
-    check_for_collisions(ship, row, column, orientation)
-    check_for_adjacent_ships(ship, row, column, orientation)
+    error_check_ship_extent(ship, row, column, orientation)
+    error_check_for_collisions(ship, row, column, orientation)
+    error_check_for_adjacent_ships(ship, row, column, orientation)
     place_ship_on_board(ship, row, column, orientation)
   end
 
@@ -37,23 +37,36 @@ class Board
     row >= 0 && column >= 0 && row <= 9 && column <= 9
   end
 
-  def check_ship_extent(ship, row, column, orientation)
+  def error_check_ship_extent(ship, row, column, orientation)
+    raise 'Ship extends beyond board!' unless ship_extent_okay?(ship, row, column, orientation)
+  end
+
+  def ship_extent_okay?(ship, row, column, orientation)
     if orientation == HORIZONTAL
-      raise 'Ship extends beyond board!' if column + (ship.length - 1) > 9
+      column + (ship.length - 1) <= 9
     else # vertical
-      raise 'Ship extends beyond board!' if row + (ship.length - 1) > 9
+      row + (ship.length - 1) <= 9
     end
   end
 
-  def check_for_collisions(ship, row, column, orientation)
+  def error_check_for_collisions(ship, row, column, orientation)
+    raise 'There is already something there!' unless no_collisions?(ship, row, column, orientation)
+  end
+
+  def no_collisions?(ship, row, column, orientation)
     ship.length.times do |i|
       check_row = orientation == VERTICAL ? row + i : row
       check_column = orientation == HORIZONTAL ? column + i : column
-      raise 'There is already something there!' if @grid[check_row][check_column]
+      return false if @grid[check_row][check_column]
     end
+    true
   end
 
-  def check_for_adjacent_ships(ship, row, column, orientation)
+  def error_check_for_adjacent_ships(ship, row, column, orientation)
+    raise 'Ships should not be adjacent!' unless no_adjacent_ships?(ship, row, column, orientation)
+  end
+
+  def no_adjacent_ships?(ship, row, column, orientation)
     ship.length.times do |i|
       check_row = orientation == VERTICAL ? row + i : row
       check_column = orientation == HORIZONTAL ? column + i : column
@@ -70,12 +83,11 @@ class Board
           next if adjacent_row < 0 || adjacent_row >= 10 || adjacent_column < 0 || adjacent_column >= 10
 
           # Check if there's a ship in the adjacent position
-          if @grid[adjacent_row][adjacent_column]
-            raise 'Ships should not be adjacent!'
-          end
+          return false if @grid[adjacent_row][adjacent_column]
         end
       end
     end
+    true
   end
 
   def place_ship_on_board(ship, row, column, orientation)
