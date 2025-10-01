@@ -1,3 +1,5 @@
+require_relative 'errors'
+
 class Board
   HORIZONTAL = 'horizontal'
   VERTICAL = 'vertical'
@@ -5,7 +7,6 @@ class Board
   ERROR_SHIP_BEGINS_BEYOND_BOARD = 'Ship begins beyond board!'
   ERROR_SHIP_EXTENDS_BEYOND_BOARD = 'Ship extends beyond board!'
   ERROR_ALREADY_SOMETHING_THERE = 'There is already something there!'
-  ERROR_SHIPS_NOT_ADJACENT = 'Ships should not be adjacent!'
 
   def initialize
     @grid = Array.new(10) { Array.new(10) }
@@ -63,7 +64,7 @@ class Board
   end
 
   def error_check_for_adjacent_ships(ship, row, column, orientation)
-    raise ERROR_SHIPS_NOT_ADJACENT unless no_adjacent_ships?(ship, row, column, orientation)
+    raise CheckShipsAdjacent::MESSAGE unless no_adjacent_ships?(ship, row, column, orientation)
   end
 
   def no_adjacent_ships?(ship, row, column, orientation)

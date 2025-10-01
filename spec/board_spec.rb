@@ -2,6 +2,7 @@
 
 require 'board'
 require 'ship'
+require 'errors'
 
 describe 'when placing ships on boards' do
   before(:each) do
@@ -38,16 +39,16 @@ describe 'when placing ships on boards' do
       @board.place(@tiny_ship, 5, 5, Board::HORIZONTAL)
     end
     it 'will not place a ship to the right' do
-      expect { @board.place(Ship.new(1), 5, 6, Board::HORIZONTAL) }.to raise_error(Board::ERROR_SHIPS_NOT_ADJACENT)
+      expect { @board.place(Ship.new(1), 5, 6, Board::HORIZONTAL) }.to raise_error(CheckShipsAdjacent::MESSAGE)
     end
     it 'will not place a ship to the left' do
-      expect { @board.place(Ship.new(1), 5, 4, Board::HORIZONTAL) }.to raise_error(Board::ERROR_SHIPS_NOT_ADJACENT)
+      expect { @board.place(Ship.new(1), 5, 4, Board::HORIZONTAL) }.to raise_error(CheckShipsAdjacent::MESSAGE)
     end
     it 'will not place a ship above' do
-      expect { @board.place(Ship.new(1), 4, 5, Board::HORIZONTAL) }.to raise_error(Board::ERROR_SHIPS_NOT_ADJACENT)
+      expect { @board.place(Ship.new(1), 4, 5, Board::HORIZONTAL) }.to raise_error(CheckShipsAdjacent::MESSAGE)
     end
     it 'will not place a ship below' do
-      expect { @board.place(Ship.new(1), 6, 5, Board::HORIZONTAL) }.to raise_error(Board::ERROR_SHIPS_NOT_ADJACENT)
+      expect { @board.place(Ship.new(1), 6, 5, Board::HORIZONTAL) }.to raise_error(CheckShipsAdjacent::MESSAGE)
     end
   end
 
