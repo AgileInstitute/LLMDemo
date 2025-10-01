@@ -28,7 +28,7 @@
 
 ## Continuous Integration
 - I will ensure all tests pass before merging code into the main branch
-- I will ensure all tests pass before merging code into the main branch
+- I will follow the commit message format: <type>(<scope>): <subject>
 
 ## Refactoring Guidelines
 - I will perform refactorings when you request them
