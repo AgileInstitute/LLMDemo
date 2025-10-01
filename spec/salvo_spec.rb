@@ -33,9 +33,20 @@ describe 'when placing ships on boards' do
   end
 
   describe 'adjacent ships raise an error' do
-    it 'will not place a ship adjacent to another one' do
-      @board.place(@tiny_ship, 0, 0, Board::HORIZONTAL)
-      expect { @board.place(Ship.new(1), 0, 1, Board::HORIZONTAL) }.to raise_error('Ships should not be adjacent!')
+    before(:each) do
+      @board.place(@tiny_ship, 5, 5, Board::HORIZONTAL)
+    end
+    it 'will not place a ship to the right' do
+      expect { @board.place(Ship.new(1), 5, 6, Board::HORIZONTAL) }.to raise_error('Ships should not be adjacent!')
+    end
+    it 'will not place a ship to the left' do
+      expect { @board.place(Ship.new(1), 5, 4, Board::HORIZONTAL) }.to raise_error('Ships should not be adjacent!')
+    end
+    it 'will not place a ship above' do
+      expect { @board.place(Ship.new(1), 4, 5, Board::HORIZONTAL) }.to raise_error('Ships should not be adjacent!')
+    end
+    it 'will not place a ship below' do
+      expect { @board.place(Ship.new(1), 6, 5, Board::HORIZONTAL) }.to raise_error('Ships should not be adjacent!')
     end
   end
 
@@ -44,7 +55,7 @@ describe 'when placing ships on boards' do
       @board.place(@long_ship, 0, 0, Board::HORIZONTAL)
       expect { @board.place(Ship.new(1), 0, 2, Board::HORIZONTAL) }.to raise_error('There is already something there!')
     end
-  
+
     it 'will NOT place a horizontal ship if it overlaps existing ship' do
       @board.place(@tiny_ship, 0, 1, Board::HORIZONTAL)
       expect { @board.place(@long_ship, 0, 0, Board::HORIZONTAL) }
@@ -56,14 +67,12 @@ describe 'when placing ships on boards' do
       expect { @board.place(@long_ship, 0, 0, Board::VERTICAL) }
         .to raise_error('There is already something there!')
     end
-  
+
     it 'will not place a ship if another one shares a starting position' do
       @board.place(@tiny_ship, 0, 0, Board::HORIZONTAL)
       expect { @board.place(Ship.new(1), 0, 0, Board::HORIZONTAL) }.to raise_error('There is already something there!')
     end
-  
   end
-  
 
   it 'will place a tiny ship at upper left with redundant orientation' do
     @board.place(@tiny_ship, 0, 0, Board::HORIZONTAL)
