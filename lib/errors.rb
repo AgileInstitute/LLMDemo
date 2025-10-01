@@ -2,10 +2,12 @@ module Check
 end
 
 class CheckShipsAdjacent
-  MESSAGE = 'Ships should not be adjacent!'
+  def self.message
+    'Ships should not be adjacent!'
+  end
 
   def self.error_check(grid, ship, row, column, orientation)
-    raise MESSAGE unless okay?(grid, ship, row, column, orientation)
+    raise message unless okay?(grid, ship, row, column, orientation)
   end
 
   def self.okay?(grid, ship, row, column, orientation)
