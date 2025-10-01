@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'salvo'
+require 'board'
+require 'ship'
 
 describe 'when placing ships on boards' do
   before(:each) do
