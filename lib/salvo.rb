@@ -2,6 +2,12 @@ class Board
   HORIZONTAL = 'horizontal'
   VERTICAL = 'vertical'
 
+  ERROR_INVALID_ORIENTATION = 'Invalid orientation!'
+  ERROR_SHIP_BEGINS_BEYOND_BOARD = 'Ship begins beyond board!'
+  ERROR_SHIP_EXTENDS_BEYOND_BOARD = 'Ship extends beyond board!'
+  ERROR_ALREADY_SOMETHING_THERE = 'There is already something there!'
+  ERROR_SHIPS_NOT_ADJACENT = 'Ships should not be adjacent!'
+
   def initialize
     @grid = Array.new(10) { Array.new(10) }
   end
@@ -22,7 +28,7 @@ class Board
   private
 
   def error_check_ship_orientation(orientation)
-    raise 'Invalid orientation!' unless ship_orientation_okay?(orientation)
+    raise ERROR_INVALID_ORIENTATION unless ship_orientation_okay?(orientation)
   end
 
   def ship_orientation_okay?(orientation)
@@ -30,7 +36,7 @@ class Board
   end
 
   def error_check_ship_starting_position(ship, row, column)
-    raise 'Ship begins beyond board!' unless ship_starting_position_okay?(ship, row, column)
+    raise ERROR_SHIP_BEGINS_BEYOND_BOARD unless ship_starting_position_okay?(ship, row, column)
   end
 
   def ship_starting_position_okay?(ship, row, column)
@@ -38,7 +44,7 @@ class Board
   end
 
   def error_check_ship_extent(ship, row, column, orientation)
-    raise 'Ship extends beyond board!' unless ship_extent_okay?(ship, row, column, orientation)
+    raise ERROR_SHIP_EXTENDS_BEYOND_BOARD unless ship_extent_okay?(ship, row, column, orientation)
   end
 
   def ship_extent_okay?(ship, row, column, orientation)
@@ -50,7 +56,7 @@ class Board
   end
 
   def error_check_for_overlapping_ships(ship, row, column, orientation)
-    raise 'There is already something there!' unless no_overlapping_ships?(ship, row, column, orientation)
+    raise ERROR_ALREADY_SOMETHING_THERE unless no_overlapping_ships?(ship, row, column, orientation)
   end
 
   def no_overlapping_ships?(ship, row, column, orientation)
@@ -63,7 +69,7 @@ class Board
   end
 
   def error_check_for_adjacent_ships(ship, row, column, orientation)
-    raise 'Ships should not be adjacent!' unless no_adjacent_ships?(ship, row, column, orientation)
+    raise ERROR_SHIPS_NOT_ADJACENT unless no_adjacent_ships?(ship, row, column, orientation)
   end
 
   def no_adjacent_ships?(ship, row, column, orientation)
