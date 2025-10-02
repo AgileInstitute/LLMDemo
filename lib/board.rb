@@ -33,7 +33,7 @@ class Board
     raise ERROR_SHIP_BEGINS_BEYOND_BOARD unless ship_starting_position_okay?(ship, row, column)
   end
 
-  def ship_starting_position_okay?(ship, row, column)
+  def ship_starting_position_okay?(_ship, row, column)
     row >= 0 && column >= 0 && row <= 9 && column <= 9
   end
 
@@ -49,8 +49,6 @@ class Board
     end
   end
 
-
-
   def place_ship_on_board(ship, row, column, orientation)
     ship.length.times do |zero_based_counter|
       cell_row = orientation == VERTICAL ? row + zero_based_counter : row
@@ -58,5 +56,4 @@ class Board
       @grid[cell_row][cell_column] = ship
     end
   end
-
 end

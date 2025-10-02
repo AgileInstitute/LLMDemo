@@ -107,8 +107,7 @@ describe 'when placing ships on boards' do
     expect(@board.whats_at(0, 7)).to eq(@long_ship)
     expect(@board.whats_at(0, 8)).to eq(@long_ship)
     expect(@board.whats_at(0, 9)).to eq(@long_ship)
-   end
-
+  end
 
   it 'will NOT place a long ship horizontally if it extends beyond board' do
     expect { @board.place(@long_ship, 0, 8, Board::HORIZONTAL) }
@@ -119,5 +118,4 @@ describe 'when placing ships on boards' do
     expect { @board.place(@long_ship, 8, 0, Board::VERTICAL) }
       .to raise_error(Board::ERROR_SHIP_EXTENDS_BEYOND_BOARD)
   end
-
 end
