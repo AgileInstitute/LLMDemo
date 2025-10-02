@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Check
   def error_check(grid, ship, row, column, orientation)
     raise message unless okay?(grid, ship, row, column, orientation)

@@ -4,7 +4,7 @@ require 'board'
 require 'ship'
 require 'errors'
 
-describe 'when placing ships on boards' do
+describe 'placing ships on the board' do
   before(:each) do
     @board = Board.new
     @tiny_ship = Ship.new(1)
@@ -52,70 +52,76 @@ describe 'when placing ships on boards' do
     end
   end
 
-  describe 'overlapping ships raise an error' do
-    it 'will not place a ship if another one is already there' do
-      @board.place(@long_ship, 0, 0, Board::HORIZONTAL)
-      expect { @board.place(Ship.new(1), 0, 2, Board::HORIZONTAL) }.to raise_error(CheckOverlapping.new.message)
+  describe 'how attempting to overlap ships raises an error' do
+    it 'will not place a ship if another one shares a starting position' do
+      @board.place(@tiny_ship, 4, 4, Board::HORIZONTAL)
+      expect { @board.place(Ship.new(1), 4, 4, Board::HORIZONTAL) }.to raise_error(CheckOverlapping.new.message)
     end
 
-    it 'will NOT place a horizontal ship if it overlaps existing ship' do
-      @board.place(@tiny_ship, 0, 1, Board::HORIZONTAL)
+    it 'will not place a ship if another ship occupies the starting position' do
+      @board.place(@long_ship, 0, 0, Board::HORIZONTAL)
+      expect { @board.place(@tiny_ship, 0, 2, Board::HORIZONTAL) }.to raise_error(CheckOverlapping.new.message)
+    end
+
+    it 'will not place a horizontal ship if it would overlap another ship' do
+      @board.place(@tiny_ship, 0, 2, Board::HORIZONTAL)
       expect { @board.place(@long_ship, 0, 0, Board::HORIZONTAL) }
         .to raise_error(CheckOverlapping.new.message)
     end
 
-    it 'will NOT place a vertical ship if it overlaps existing ship' do
-      @board.place(@tiny_ship, 1, 0, Board::HORIZONTAL)
+    it 'will not place a vertical ship if it would overlap another ship' do
+      @board.place(@tiny_ship, 2, 0, Board::HORIZONTAL)
       expect { @board.place(@long_ship, 0, 0, Board::VERTICAL) }
         .to raise_error(CheckOverlapping.new.message)
     end
+  end
 
-    it 'will not place a ship if another one shares a starting position' do
+  describe 'placing a ship in the upper and lower bounds' do
+    it 'will place a tiny ship at upper left with redundant orientation' do
       @board.place(@tiny_ship, 0, 0, Board::HORIZONTAL)
-      expect { @board.place(Ship.new(1), 0, 0, Board::HORIZONTAL) }.to raise_error(CheckOverlapping.new.message)
+      expect(@board.whats_at(0, 0)).to eq(@tiny_ship)
+    end
+
+    it 'will place a tiny ship at lower right with redundant orientation' do
+      @board.place(@tiny_ship, 9, 9, Board::VERTICAL)
+      expect(@board.whats_at(9, 9)).to eq(@tiny_ship)
     end
   end
 
-  it 'will place a tiny ship at upper left with redundant orientation' do
-    @board.place(@tiny_ship, 0, 0, Board::HORIZONTAL)
-    expect(@board.whats_at(0, 0)).to eq(@tiny_ship)
+  describe 'placing a multi-celled ship' do
+    it 'will place a long ship horizontally' do
+      @board.place(@long_ship, 0, 0, Board::HORIZONTAL)
+      expect(@board.whats_at(0, 0)).to eq(@long_ship)
+      expect(@board.whats_at(0, 1)).to eq(@long_ship)
+      expect(@board.whats_at(0, 2)).to eq(@long_ship)
+      expect(@board.whats_at(0, 3)).to be_nil
+    end
+
+    it 'will place a long ship vertically' do
+      @board.place(@long_ship, 0, 0, Board::VERTICAL)
+      expect(@board.whats_at(0, 0)).to eq(@long_ship)
+      expect(@board.whats_at(1, 0)).to eq(@long_ship)
+      expect(@board.whats_at(2, 0)).to eq(@long_ship)
+      expect(@board.whats_at(3, 0)).to be_nil
+    end
+
+    it 'will place a long ship against the edge of the board' do
+      @board.place(@long_ship, 0, 7, Board::HORIZONTAL)
+      expect(@board.whats_at(0, 7)).to eq(@long_ship)
+      expect(@board.whats_at(0, 8)).to eq(@long_ship)
+      expect(@board.whats_at(0, 9)).to eq(@long_ship)
+    end
   end
 
-  it 'will place a tiny ship at lower right with redundant orientation' do
-    @board.place(@tiny_ship, 9, 9, Board::VERTICAL)
-    expect(@board.whats_at(9, 9)).to eq(@tiny_ship)
-  end
+  describe 'how an error occurs if the ship would extend beyond the edge of the board' do
+    it 'will NOT place a long ship horizontally if it extends beyond board' do
+      expect { @board.place(@long_ship, 0, 8, Board::HORIZONTAL) }
+        .to raise_error(Board::ERROR_SHIP_EXTENDS_BEYOND_BOARD)
+    end
 
-  it 'will place a long ship horizontally' do
-    @board.place(@long_ship, 0, 0, Board::HORIZONTAL)
-    expect(@board.whats_at(0, 0)).to eq(@long_ship)
-    expect(@board.whats_at(0, 1)).to eq(@long_ship)
-    expect(@board.whats_at(0, 2)).to eq(@long_ship)
-    expect(@board.whats_at(0, 3)).to be_nil
-  end
-
-  it 'will place a long ship vertically' do
-    @board.place(@long_ship, 0, 0, Board::VERTICAL)
-    expect(@board.whats_at(0, 0)).to eq(@long_ship)
-    expect(@board.whats_at(1, 0)).to eq(@long_ship)
-    expect(@board.whats_at(2, 0)).to eq(@long_ship)
-    expect(@board.whats_at(3, 0)).to be_nil
-  end
-
-  it 'will place a long ship against the edge of the board' do
-    @board.place(@long_ship, 0, 7, Board::HORIZONTAL)
-    expect(@board.whats_at(0, 7)).to eq(@long_ship)
-    expect(@board.whats_at(0, 8)).to eq(@long_ship)
-    expect(@board.whats_at(0, 9)).to eq(@long_ship)
-  end
-
-  it 'will NOT place a long ship horizontally if it extends beyond board' do
-    expect { @board.place(@long_ship, 0, 8, Board::HORIZONTAL) }
-      .to raise_error(Board::ERROR_SHIP_EXTENDS_BEYOND_BOARD)
-  end
-
-  it 'will NOT place a long ship vertically if it extends beyond board' do
-    expect { @board.place(@long_ship, 8, 0, Board::VERTICAL) }
-      .to raise_error(Board::ERROR_SHIP_EXTENDS_BEYOND_BOARD)
+    it 'will NOT place a long ship vertically if it extends beyond board' do
+      expect { @board.place(@long_ship, 8, 0, Board::VERTICAL) }
+        .to raise_error(Board::ERROR_SHIP_EXTENDS_BEYOND_BOARD)
+    end
   end
 end
