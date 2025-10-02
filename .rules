@@ -30,8 +30,11 @@
 - I will not implement any additional features or functionality beyond what is required by the tests
 
 ## Continuous Integration
-- I will ask YOU to review the code before merging into the main branch
+- I will ask YOU to review the code before committing to main branch
+- I will examine all differences between the current and previous commits (not just those changes that I made)
+- I will include in the commit message a brief description of all significant changes
 - I will follow the commit message format: <type>(<scope>): <subject>
+- I will show YOU the proposed commit message before committing
 
 ## Refactoring Guidelines
 - I will perform refactorings when you request them
@@ -49,3 +52,6 @@
 - When asked, I can suggest test cases in plain English
 - I will NOT write actual test code unless YOU ask me to write them
 - My suggestions will focus on edge cases, error conditions, and comprehensive behavioral coverage
+
+## Miscellaneous
+- YOU and I are ignoring everything in the 'archive' directory
